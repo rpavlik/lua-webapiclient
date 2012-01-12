@@ -1,4 +1,30 @@
--- Modified from:
+--[[ Module usage:
+
+local jsonapi = require "jsonapi"
+
+This provides access to two table entries:
+  jsonapi.createProxy(url) (or eventually jsonapi.createProxy{url = "...", username = "...", password = "..."} )
+returns a proxy for accessing JSON-based web services, starting with your given URL prefix.
+
+  jsonapi.universal is a proxy that has no URL prefix, so it can be used with a full URL if you just want a one-off call.
+
+Calls take one of the following forms, given that p is a proxy
+  p:httpverb()
+  p:httpverb apipath
+  p:httpverb(apipath, jsontable)
+
+where httpverb is any http verb (we'll uppercase it for you), apipath will
+be appended to the URL prefix for the proxy if given, and jsontable is a table
+whose contents will be converted into json and submitted with your request.
+
+All such calls return up to four values, in this order:
+  result: the table decoded from the server's json reply, or nil if no (valid) json returned.
+  code: the HTTP result code (like 200, 404, etc.)
+  httpresponse: the full text of the http response.
+  err: If there was an error in parsing the server's json reply, details are here.
+]]
+
+-- HTTP access code based on:
 -----------------------------------------------------------------------------
 -- JSONRPC4Lua: JSON RPC client calls over http for the Lua language.
 -- json.rpc Module.
@@ -7,15 +33,6 @@
 -- Version: 0.9.40
 -- This module is released under the MIT License (MIT).
 -- Please see LICENCE.txt for details.
---
--- USAGE:
--- This module exposes two functions:
---   proxy( 'url')
---     Returns a proxy object for calling the JSON RPC Service at the given url.
---   call ( 'url', 'method', ...)
---     Calls the JSON RPC server at the given url, invokes the appropriate method, and
---     passes the remaining parameters. Returns the result and the error. If the result is nil, an error
---     should be there (or the system returned a null). If an error is there, the result should be nil.
 --
 -- REQUIREMENTS:
 --  Lua socket 2.0 (http://www.cs.princeton.edu/~diego/professional/luasocket/)
