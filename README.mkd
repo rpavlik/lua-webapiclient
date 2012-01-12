@@ -3,7 +3,7 @@ lua-webapiclient
 
 * Homepage: <https://github.com/rpavlik/lua-webapiclient>
 
-* Original Author:
+Original Author:
 
 > Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 > <http://academic.cleardefinition.com>
@@ -25,12 +25,13 @@ helpful mailing list posts][luamlssl] were transformed into `https.lua` so SSL c
 
 Dependencies
 ------------
-json4lua (which is pure Lua) is included as a submodule, and depends
-only on Lua 5.1 and [Lua Socket 2.0][luasocket], which is pretty
-prevalent. If your system doesn't have json4lua as a package, the
-`Makefile`'s default `all` target will copy all the json4lua files to
-the root dir of this repo so you can run stuff without problems. (`make
-clean` will reverse it, don't worry.)
+[My friendly fork of json4lua][myjson] (which merges changes from the
+existing network and does minor tweaks) is pure Lua, and is included as
+a submodule. It depends only on Lua 5.1 and [Lua Socket 2.0][luasocket],
+which is pretty prevalent. If your system doesn't have json4lua as a
+package, the `Makefile`'s default `all` target will copy all the
+json4lua files to the root dir of this repo so you can run stuff without
+problems. (`make clean` will reverse it, don't worry.)
 
 The HTTPS support depends on [LuaSec] aka `require "ssl"`, but only if
 you actually try to access an https web service.
@@ -40,6 +41,7 @@ the tests. If you don't mind the aforementioned copying, `make test`
 will run the small test suite. Note that the tests use the GitHub API,
 which is an https service.
 
+[myjson]:https://github.com/rpavlik/json
 [luasocket]:http://w3.impa.br/~diego/software/luasocket/home.html
 [LuaSec]:http://www.inf.puc-rio.br/~brunoos/luasec/
 [lunatest]:https://github.com/silentbicycle/lunatest
