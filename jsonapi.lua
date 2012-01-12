@@ -25,9 +25,22 @@
 
 local json = require('json')
 local http = require("socket.http")
-local https = require "https"
 local ltn12 = require('ltn12')
 local mime = require("mime")
+
+local fixupHTTPS = function(request)
+  local socketurl = require("socket.url")
+  local parsed = socketurl.parse(request.url)
+  if parsed.scheme == "https" then
+    print("Using SSL")
+    local https = require "https"
+    request.create = https.create
+    if parsed.port == nil then
+      parsed.port = 443
+    end
+    request.url = socketurl.build(parsed)
+  end
+end
 
 local metat = { __index = {} }
 
@@ -65,10 +78,8 @@ metat.__index.send_request = function(self, verb, path, input)
     url = self:get_url(path)
   }
   print("Will access url", request.url)
-  if request.url:sub(1, 5) == "https" then
-    print("Using SSL")
-    request.create = https.create
-  end
+
+  fixupHTTPS(request)
 
   if jsonRequest then
     request.headers = { ['content-type']='text/plain', ['content-length']=string.len(jsonRequest) }
