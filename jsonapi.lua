@@ -59,7 +59,9 @@ metat.__index.send_request = function(self, verb, path, input)
     method = verb,
     url = self:get_url(path)
   }
-  if request.url:sub(1, 6) == "https" then
+  print("Will access url", request.url)
+  if request.url:sub(1, 5) == "https" then
+    print("Using SSL")
     request.create = https.create
   end
 
