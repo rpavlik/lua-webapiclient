@@ -11,6 +11,7 @@ function test_github_blank()
 	assert_nil(result, "Should return nil since it failed.")
 	assert_number(code, "Should always return numeric code.")
 	assert_equal(code, 204, "Github returns a 204 for this API call.")
+	assert_string(response, "Should always return the http response here.")
 	assert_string(err, "Should be returning a json4lua parse error with the empty return value here.")
 end
 
@@ -21,6 +22,7 @@ function test_github_issues()
 	assert_gt(0, #result, "Should actually have stuff in this table.")
 	assert_number(code, "Should always return numeric code.")
 	assert_equal(code, 200, "Github returns a 200 for this API call.")
+	assert_string(response, "Should always return the http response here.")
 	assert_nil(err, "Should not have an error.")
 end
 
