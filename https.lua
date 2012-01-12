@@ -28,7 +28,7 @@ local function create()
 
 
     function t:connect(host, port)
-        print ("proxy connect ", host, port)
+        --print ("proxy connect ", host, port)
         try(self.c:connect(host, port))
         --print ("connected")
         self.c = try(ssl.wrap(self.c,params))

@@ -32,7 +32,6 @@ local fixupHTTPS = function(request)
   local socketurl = require("socket.url")
   local parsed = socketurl.parse(request.url)
   if parsed.scheme == "https" then
-    print("Using SSL")
     local https = require "https"
     request.create = https.create
     if parsed.port == nil then
@@ -77,7 +76,6 @@ metat.__index.send_request = function(self, verb, path, input)
     method = verb,
     url = self:get_url(path)
   }
-  print("Will access url", request.url)
 
   fixupHTTPS(request)
 
@@ -86,19 +84,11 @@ metat.__index.send_request = function(self, verb, path, input)
     request.source = ltn12.source.string(jsonRequest)
   end
 
-  -- Debugging prints
-  if type(request.headers) == "table" then
-    print("Headers:")
-    for k, v in pairs(request.headers) do
-      print(k, v)
-    end
-  end
-
   httpResponse, code = http.request(request)
 
   httpResponse = table.concat(resultChunks)
+
   -- Check the http response code
-  print("HTTP code: " .. code)
   if (code<200 or code > 299) then
     error("HTTP ERROR: " .. code .. "\n" .. httpResponse)
   end
