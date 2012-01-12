@@ -91,6 +91,10 @@ metat.__index.send_request = function(self, verb, path, input)
   if (code<200 or code > 299) then
     error("HTTP ERROR: " .. code .. "\n" .. httpResponse)
   end
+
+  print("Response:")
+  print(httpResponse)
+
   -- And decode the httpResponse and check the JSON RPC result code
   result = json.decode( httpResponse )
   if result.result then
