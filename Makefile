@@ -21,6 +21,9 @@ updategitignore: $(MAKEFILE) .gitignore
 	  grep --quiet "/$${fn}" .gitignore || (echo "/$${fn}" >> .gitignore; echo "Adding $${fn} to .gitignore")\
 	done
 
+.gitignore:
+	touch .gitignore
+
 $(JSONOUTPUTS): % : $(JSONDIR)/%  $(MAKEFILE)
 	@echo Copying $<
 	@cp $<	$@
