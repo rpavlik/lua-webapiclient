@@ -19,7 +19,7 @@ local function create()
     local t = {c=try(socket.tcp())}
 
     function idx (tbl, key)
-        print("idx " .. key)
+        --print("idx " .. key)
         return function (prxy, ...)
                    local c = prxy.c
                    return c[key](c,...)
@@ -30,11 +30,11 @@ local function create()
     function t:connect(host, port)
         print ("proxy connect ", host, port)
         try(self.c:connect(host, port))
-        print ("connected")
+        --print ("connected")
         self.c = try(ssl.wrap(self.c,params))
-        print("wrapped")
+        --print("wrapped")
         try(self.c:dohandshake())
-        print("handshaked")
+        --print("handshaked")
         return 1
     end
 
