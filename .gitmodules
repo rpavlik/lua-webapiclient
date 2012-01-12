@@ -1,0 +1,3 @@
+[submodule "json4lua"]
+	path = json4lua
+	url = git://github.com/rpavlik/json.git
