@@ -6,7 +6,7 @@ local ssl = require "ssl"
 
 local params = {
     mode = "client",
-    protocol = "sslv23",
+    protocol = "tlsv1",
     cafile = "/etc/ssl/certs/ca-certificates.crt",
     verify = "peer",
     options = "all",
