@@ -21,6 +21,10 @@ updategitignore: $(MAKEFILE) .gitignore
 	  grep --quiet "/$${fn}" .gitignore || (echo "/$${fn}" >> .gitignore; echo "Adding $${fn} to .gitignore")\
 	done
 
+test: all
+	lua tests.lua
+
+# For initially creating a gitignore
 .gitignore:
 	touch .gitignore
 
@@ -28,4 +32,4 @@ $(JSONOUTPUTS): % : $(JSONDIR)/%  $(MAKEFILE)
 	@echo Copying $<
 	@cp $<	$@
 
-.PHONY: all clean updategitignore
+.PHONY: all clean updategitignore test
