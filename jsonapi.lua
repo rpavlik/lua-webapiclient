@@ -106,8 +106,7 @@ metat.__index.send_request = function(self, verb, path, input)
   -- And decode the httpResponse and check the JSON RPC result code
   local status, result = pcall(json.decode, httpResponse)
   if not status then
-    print("jsonapi warning: decode error:", result)
-    return {}, code, httpResponse, result
+    return nil, code, httpResponse, result
   end
 
   return result, code, httpResponse
