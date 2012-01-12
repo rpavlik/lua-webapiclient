@@ -32,12 +32,17 @@ local mime = require("mime")
 local metat = { __index = {} }
 
 metat.__index.get_url = function(self, path)
-  print("Given path '" .. path .. "'")
+  local url = {}
   if self.baseurl then
-    return self.baseurl .. path
-  else
-    return path
+    table.insert(url, self.baseurl)
   end
+  if path ~= nil then
+    table.insert(url, path)
+  end
+  if #url == 0 then
+    error("Can't perform a request without a path!", 2)
+  end
+  return table.concat(url)
 end
 
 metat.__index.send_request = function(self, verb, path, input)
