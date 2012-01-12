@@ -1,3 +1,6 @@
 [submodule "json4lua"]
 	path = json4lua
 	url = git://github.com/rpavlik/json.git
+[submodule "lunatest"]
+	path = lunatest
+	url = https://github.com/silentbicycle/lunatest.git
