@@ -1,0 +1,74 @@
+lua-webapiclient
+================
+
+* Homepage: <https://github.com/rpavlik/lua-webapiclient>
+
+* Original Author:
+
+> Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+> <http://academic.cleardefinition.com>
+>
+> Iowa State University HCI Graduate Program/VRAC
+
+
+This is a bit of code I pulled together to be able to use simple JSON-based
+web apis (like [GitHub's api v3][ghapi3]) using lua. [json4lua][] got me
+most of the way there, but their RPC client was a bit less flexible than
+I needed, and SSL support was essential.
+
+Fortunately, a little metatable magic gave me a nice proxy-based API allowing code like `github:get "/repo/vance-group/vr-jugglua/issues"`, and [some
+helpful mailing list posts][luamlssl] were transformed into `https.lua` so SSL could be transparently used.
+
+[ghapi3]:http://developer.github.com/v3/
+[json4lua]:http://json.luaforge.net/
+[luamlssl]:http://lua-users.org/lists/lua-l/2009-02/msg00270.html
+
+Dependencies
+------------
+json4lua (which is pure Lua) is included as a submodule, and depends
+only on Lua 5.1 and [Lua Socket 2.0][luasocket], which is pretty
+prevalent. If your system doesn't have json4lua as a package, the
+`Makefile`'s default `all` target will copy all the json4lua files to
+the root dir of this repo so you can run stuff without problems. (`make
+clean` will reverse it, don't worry.)
+
+The HTTPS support depends on [LuaSec] aka `require "ssl"`, but only if
+you actually try to access an https web service.
+
+[lunatest][] is included as a submodule, and is only needed for running
+the tests. If you don't mind the aforementioned copying, `make test`
+will run the small test suite. Note that the tests use the GitHub API,
+which is an https service.
+
+[luasocket]:http://w3.impa.br/~diego/software/luasocket/home.html
+[LuaSec]:http://www.inf.puc-rio.br/~brunoos/luasec/
+[lunatest]:https://github.com/silentbicycle/lunatest
+
+How to Use
+----------
+The only actual "new" files are `jsonapi.lua` and `https.lua`. Usage
+instructions are at the top of `jsonapi.lua`. For an example of how to
+use it, see `github.lua` - note that it requires lua's stdlib modules
+for pretty-printing.
+
+This code will get the issues from GitHub's v3 api for the [vance-group/vrjugglua][vrjlua] project:
+
+```lua
+
+-- Load the module
+local jsonapi = require "jsonapi"
+
+-- Create a proxy
+local github = jsonapi.createProxy("https://api.github.com")
+
+-- Perform a "GET" request on the listed path, returning the issues in a
+-- table decoded from JSON.
+local issues, code, response = github:get "/repos/vance-group/vr-jugglua/issues"
+
+-- Note that usually, you can just save the first return value if you need any at all.
+-- If it's nil, that means the response was empty or couldn't be parsed by json4lua.
+
+```
+
+[vrjlua]:https://github.com/vance-group/vr-jugglua
+
