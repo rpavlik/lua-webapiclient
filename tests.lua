@@ -7,7 +7,7 @@ end
 
 function test_github_blank()
 	local github = create_github()
-	local result, code, err = github:get()
+	local result, code, response, err = github:get()
 	assert_table(result, "Should always return a table, even if it failed.")
 	assert_len(result, 0, "Should return an empty table.")
 	assert_number(code, "Should always return numeric code.")
@@ -17,7 +17,7 @@ end
 
 function test_github_issues()
 	local github = create_github()
-	local result, code, err = github:get "/repos/vance-group/vr-jugglua/issues"
+	local result, code, response, err = github:get "/repos/vance-group/vr-jugglua/issues"
 	assert_table(result, "Should always return a table")
 	assert_gt(#result, 0, "Should actually have stuff in this table.")
 	assert_number(code, "Should always return numeric code.")
