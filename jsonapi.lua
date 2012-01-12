@@ -108,11 +108,8 @@ metat.__index.send_request = function(self, verb, path, input)
 
   -- And decode the httpResponse and check the JSON RPC result code
   result = json.decode( httpResponse )
-  if result.result then
-    return code, result.result
-  else
-    return code, nil, result.error
-  end
+
+  return result, code
 end
 
 local index_to_request = function(self, verb)
