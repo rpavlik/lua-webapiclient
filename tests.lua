@@ -17,7 +17,7 @@ end
 
 function test_github_issues()
 	local github = create_github()
-	local result, code, response, err = github:get "/repos/vance-group/vr-jugglua/issues"
+	local result, code, response, err = github:get "/repos/vancegroup/vr-jugglua/issues"
 	assert_table(result, "Should always return a table")
 	assert_gt(0, #result, "Should actually have stuff in this table.")
 	assert_number(code, "Should always return numeric code.")
