@@ -43,7 +43,7 @@ which is an https service.
 
 [myjson]:https://github.com/rpavlik/json
 [luasocket]:http://w3.impa.br/~diego/software/luasocket/home.html
-[LuaSec]:http://www.inf.puc-rio.br/~brunoos/luasec/
+[LuaSec]:https://github.com/brunoos/luasec/wiki
 [lunatest]:https://github.com/silentbicycle/lunatest
 
 How to Use
