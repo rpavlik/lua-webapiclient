@@ -10,7 +10,7 @@ source = {
 dependencies = {
    "lua ~> 5.1";
    "luasocket";
-   "https://raw.github.com/rpavlik/json4lua/master/json4lua-0.95-1.rockspec";
+   "json4lua";
 }
 build = {
   type = "builtin";
